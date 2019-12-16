@@ -1,0 +1,13 @@
+•	Za potrebe ovog servisa kreirana je baza koja sadrži dve tabele koje su povezane pomoću spolјnog klјuča s obzirom da nije predviđeno da jedna vest može da bude raspoređena u dve ili više kategorija.
+•	 Pri razvoju servisa sa takvom mogućnošću potrebno je dodati još jednu tabelu koja bi sadržala dva spolјna klјuča i na taj način povezivala dve tabele. (Alternativno, podešavanje da primarnni klјuč tabele koja sadrži vesti ne mora da bude jedinstven i dupliranje upisa bi kršilo drugu normalnu formu – drugi princip normalizacije baza podataka). 
+
+
+
+
+-U slučaju da su kategorije i vesti iste na srpskom i engleskom, nema potrebe za dve različite getCategories i getPosts funkcije. Potrebno je da postoje i polјe name i polјe name_eng u Data klasi i njenom konstruktoru kod Category klase. Kod Post Data klase i u bazi vesti na različitim jezicima treba da se "spoje"(umesto dva upisa postojaće jedan sa poljima content i content_eng). Onda u OnCheckedChangeListener-u na osnovu odabranog jezika (dodati if naredbu) umesto ponovnog poziva za dohvatanje podataka sa servera treba samo dohvatiti ime kategorije na odgovarajućem jeziku. U CategoryAdapter klasi bi se samo dohvatao niz vesti, a tek bi se u VestAdapter klasi na osnovu jezika izdvajali detalјi kojima treba da se popune layout-i.
+
+-U slučaju da su kategorije različite na različitim jezicima u bazi bi trebalo kategoriju modelovati samo sa jednim imenom i dodati jedno polјe koje ukazuje na kom je jeziku kategorija, ili ostaviti sadašnji model, pa u serverskom delu aplikacije u niz dohvaćenih vesti ne dodavati onu kategoriju koja za ime na traženom jeziku ima vrednost null. U ovom slučaju vesti na srpskom i engleskom ostale bi odvojene.
+
+-Treba rešiti problem dohvatanja vesti (sinhrono dohvatanje u pozadinskom threadu ne funkcioniše, pa je ostavljena asinhrona varijanta sa ručno dodatim kašnjenjem). 
+
+
